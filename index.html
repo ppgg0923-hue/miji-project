@@ -50,7 +50,7 @@
             cursor: pointer;
             z-index: 10;
             /* 위치 확인용: 평소엔 아주 옅은 흰색, 마우스 올리면 노란색 */
-            border: 1px dashed rgba(255, 255, 255, 0.2); 
+            border: 1px dashed rgba(255, 255, 255, 0.3); 
             background-color: rgba(255, 255, 255, 0.05);
             transition: all 0.2s;
         }
@@ -109,35 +109,36 @@
                     <!-- Interactive areas -->
                     <div class="absolute inset-0">
                         <!-- 
-                           [가이드 이미지 1000032683.png 기반 정밀 좌표 수정]
+                           [가이드 이미지 기반 재수정 v3]
+                           박스 위치를 더 정확하게 조정했습니다.
                         -->
                         
-                        <!-- 1. 헤어라인 (빨간박스: 상단 좌측 넓은 영역) -->
-                        <div class="face-area" data-part="헤어라인" style="top: 24%; left: 22%; width: 25%; height: 12%; border: 1px solid rgba(255,0,0,0.3);" title="헤어라인"></div>
+                        <!-- 1. 헤어라인 (상단 넓은 영역) -->
+                        <div class="face-area" data-part="헤어라인" style="top: 18%; left: 22%; width: 26%; height: 13%;" title="헤어라인"></div>
                         
-                        <!-- 2. 눈 (좌측: 빨간박스) -->
-                        <div class="face-area" data-part="눈" style="top: 40%; left: 23%; width: 7%; height: 7%; border: 1px solid rgba(255,0,0,0.3);" title="눈 (좌)"></div>
+                        <!-- 2. 눈 (좌측) -->
+                        <div class="face-area" data-part="눈" style="top: 41%; left: 22%; width: 9%; height: 8%;" title="눈 (좌)"></div>
                         
-                        <!-- 3. 눈 (우측: 빨간박스) -->
-                        <div class="face-area" data-part="눈" style="top: 40%; left: 33%; width: 9%; height: 6%; border: 1px solid rgba(255,0,0,0.3);" title="눈 (우)"></div>
+                        <!-- 3. 눈 (우측) -->
+                        <div class="face-area" data-part="눈" style="top: 41%; left: 35%; width: 10%; height: 8%;" title="눈 (우)"></div>
 
-                        <!-- 4. 눈썹 (우측 눈 위쪽: 빨간박스) -->
-                        <div class="face-area" data-part="눈썹" style="top: 36%; left: 33%; width: 9%; height: 4%; border: 1px solid rgba(255,0,0,0.3);" title="눈썹"></div>
+                        <!-- 4. 눈썹 (우측 눈 위쪽) -->
+                        <div class="face-area" data-part="눈썹" style="top: 36%; left: 35%; width: 10%; height: 5%;" title="눈썹"></div>
 
-                        <!-- 5. 코 (중앙: 빨간박스) -->
-                        <div class="face-area" data-part="코" style="top: 48%; left: 25%; width: 9%; height: 9%; border: 1px solid rgba(255,0,0,0.3);" title="코"></div>
+                        <!-- 5. 코 (중앙) -->
+                        <div class="face-area" data-part="코" style="top: 50%; left: 27%; width: 11%; height: 10%;" title="코"></div>
                         
-                        <!-- 6. 턱/입 (하단 중앙: 빨간박스) -->
-                        <div class="face-area" data-part="입/입술" style="top: 60%; left: 27%; width: 10%; height: 13%; border: 1px solid rgba(255,0,0,0.3);" title="입술/턱"></div>
+                        <!-- 6. 턱/입 (하단 중앙) -->
+                        <div class="face-area" data-part="입/입술" style="top: 63%; left: 27%; width: 13%; height: 13%;" title="입술/턱"></div>
                         
-                        <!-- 7. 귀 (우측 측면: 빨간박스) -->
-                        <div class="face-area" data-part="귀" style="top: 39%; left: 49%; width: 13%; height: 12%; border: 1px solid rgba(255,0,0,0.3);" title="귀"></div>
+                        <!-- 7. 귀 (우측 측면) -->
+                        <div class="face-area" data-part="귀" style="top: 40%; left: 51%; width: 10%; height: 12%;" title="귀"></div>
                         
-                        <!-- 8. 얼굴형 (우측 뺨/턱선: 빨간박스) -->
-                        <div class="face-area" data-part="얼굴형" style="top: 52%; left: 40%; width: 16%; height: 13%; border: 1px solid rgba(255,0,0,0.3);" title="얼굴형"></div>
+                        <!-- 8. 얼굴형 (우측 뺨/턱선) -->
+                        <div class="face-area" data-part="얼굴형" style="top: 54%; left: 42%; width: 14%; height: 14%;" title="얼굴형"></div>
                         
-                        <!-- 9. 어깨 (좌측 하단 큰 박스: 빨간박스) -->
-                        <div class="face-area" data-part="체형/어깨" style="top: 73%; left: 26%; width: 20%; height: 23%; border: 1px solid rgba(255,0,0,0.3);" title="어깨/쇄골"></div>
+                        <!-- 9. 어깨 (좌측 하단 큰 박스) -->
+                        <div class="face-area" data-part="체형/어깨" style="top: 74%; left: 27%; width: 18%; height: 22%;" title="어깨/쇄골"></div>
                     </div>
                 </div>
                 <p class="mt-4 text-center text-sm text-gray-500">
