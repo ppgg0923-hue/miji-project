@@ -27,17 +27,17 @@
         .face-container {
             position: relative;
             width: 100%;
-            padding-top: 137.5%; /* 이미지 비율에 맞춰 조정 */
+            /* [비율 수정됨] 
+               기존 137.5% -> 100% (정사각형 비율)
+               이미지가 여전히 잘린다면 이 % 숫자를 조절해보세요. (예: 75% = 4:3 비율)
+            */
+            padding-top: 100%; 
             max-width: 500px;
             margin: auto;
             
-            /* [이미지 수정하는 곳]
-               본인의 이미지를 사용하려면 아래 줄을 지우고, 
-               background-image: url('face_map.png'); 로 바꾸세요.
-            */
-            background-image: url('face_map.png');
+            background-image: url("face_map.png");
             
-            background-size: cover;
+            background-size: contain; /* cover에서 contain으로 변경하여 이미지가 잘리지 않게 함 */
             background-repeat: no-repeat;
             background-position: center top;
             border-radius: 12px;
@@ -116,25 +116,35 @@
                     <!-- Interactive areas -->
                     <div class="absolute inset-0">
                         <!-- 
-                           [수정됨] 이목구비 클릭 위치를 face_map.png.jpg 이미지에 맞춰 재조정했습니다.
+                           [위치 재조정 완료] 
+                           보내주신 '반측면(왼쪽을 보는 여성)' 이미지에 맞춰 좌표를 수정했습니다.
                         -->
-                        <div class="face-area" data-part="눈" style="top: 25%; left: 15%; width: 28%; height: 11%; transform: rotate(-7deg);" title="눈 지역 (좌)"></div>
-                        <div class="face-area" data-part="눈" style="top: 25%; right: 15%; width: 28%; height: 11%; transform: rotate(7deg);" title="눈 지역 (우)"></div>
                         
-                        <div class="face-area" data-part="코" style="top: 35%; left: 35%; width: 30%; height: 25%;" title="코 지역"></div>
+                        <!-- 왼쪽 눈 (이미지상 왼쪽) -->
+                        <div class="face-area" data-part="눈" style="top: 36%; left: 28%; width: 12%; height: 8%;" title="눈 (좌)"></div>
+                        <!-- 오른쪽 눈 (이미지상 오른쪽) -->
+                        <div class="face-area" data-part="눈" style="top: 36%; left: 46%; width: 12%; height: 8%;" title="눈 (우)"></div>
                         
-                        <div class="face-area" data-part="입/입술" style="top: 62%; left: 30%; width: 40%; height: 11%;" title="입술 지역"></div>
+                        <!-- 코 -->
+                        <div class="face-area" data-part="코" style="top: 44%; left: 36%; width: 14%; height: 14%;" title="코"></div>
                         
-                        <div class="face-area" data-part="눈썹" style="top: 17%; left: 15%; width: 30%; height: 6%; transform: rotate(-10deg);" title="눈썹 지역 (좌)"></div>
-                        <div class="face-area" data-part="눈썹" style="top: 17%; right: 15%; width: 30%; height: 6%; transform: rotate(10deg);" title="눈썹 지역 (우)"></div>
+                        <!-- 입술 -->
+                        <div class="face-area" data-part="입/입술" style="top: 58%; left: 34%; width: 18%; height: 8%;" title="입술"></div>
                         
-                        <div class="face-area" data-part="얼굴형" style="top: 40%; left: 2%; width: 20%; height: 45%; border-radius: 40% 0 0 60%;" title="윤곽/턱선 (좌)"></div>
-                        <div class="face-area" data-part="얼굴형" style="top: 40%; right: 2%; width: 20%; height: 45%; border-radius: 0 40% 60% 0;" title="윤곽/턱선 (우)"></div>
+                        <!-- 이마 -->
+                        <div class="face-area" data-part="헤어라인" style="top: 22%; left: 30%; width: 30%; height: 12%;" title="이마/헤어라인"></div>
                         
-                        <div class="face-area" data-part="귀" style="top: 38%; left: -3%; width: 12%; height: 20%; border-radius: 50%;" title="귀 (좌)"></div>
-                        <div class="face-area" data-part="귀" style="top: 38%; right: -3%; width: 12%; height: 20%; border-radius: 50%;" title="귀 (우)"></div>
-
-                        <div class="face-area" data-part="헤어라인" style="top: 2%; left: 10%; width: 80%; height: 15%; border-radius: 50% 50% 0 0;" title="헤어라인"></div>
+                        <!-- 오른쪽 턱/볼 (이미지상 오른쪽 윤곽) -->
+                        <div class="face-area" data-part="얼굴형" style="top: 50%; left: 52%; width: 15%; height: 20%;" title="볼/윤곽"></div>
+                        
+                        <!-- 턱 끝 -->
+                        <div class="face-area" data-part="얼굴형" style="top: 66%; left: 36%; width: 14%; height: 10%;" title="턱 끝"></div>
+                        
+                        <!-- 귀 (이미지상 오른쪽에 있는 귀) -->
+                        <div class="face-area" data-part="귀" style="top: 40%; left: 60%; width: 8%; height: 15%;" title="귀"></div>
+                        
+                        <!-- 어깨 (이미지 하단) -->
+                        <div class="face-area" data-part="얼굴형" style="top: 75%; left: 25%; width: 40%; height: 25%;" title="어깨/목"></div>
                     </div>
                 </div>
                 <p class="mt-4 text-center text-sm text-gray-500">
