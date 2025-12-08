@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>미지(美地) - 외모 개발 지구 포털</title>
+    <!-- Tailwind CSS CDN & Custom Font -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Noto+Sans+KR:wght@100..900&display=swap');
+        
+        body {
+            font-family: 'Noto Sans KR', 'Inter', sans-serif;
+            background-color: #f0f4f8; 
+            color: #1e293b; 
+            scroll-behavior: smooth;
+        }
+
+        /* Navy/Yellow Theme Classes */
+        .header-bg { background-color: #0f172a; } 
+        .primary-color { color: #facc15; } 
+        .primary-bg { background-color: #facc15; }
+        .data-card-bg { background-color: #ffffff; }
+        .ad-banner-bg { background-color: #fffbeb; } 
+
+        /* Face Map Container */
+        .face-container {
+            position: relative;
+            width: 100%;
+            padding-top: 137.5%; /* 이미지 비율에 맞춰 조정 */
+            max-width: 500px;
+            margin: auto;
+            /* [중요] 실제 사용 시: 
+               1. 본인의 얼굴 지도 이미지를 이 HTML 파일과 같은 폴더에 'face_map.png'로 저장하세요.
+               2. 아래 url을 url('face_map.png') 로 변경하면 이미지가 나옵니다.
+               현재는 예시 이미지를 넣어두었습니다.
+            */
+            background-image: url("https://placehold.co/500x687/ffe4e1/cd5c5c?text=Face+Map+Image");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center top;
+            border-radius: 12px;
+        }
+
+        /* Face Area Clickable Overlay */
+        .face-area {
+            position: absolute;
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 10;
+            border: 1px dashed rgba(250, 204, 21, 0.0); /* 평소엔 투명 */
+        }
+        .face-area:hover {
+            opacity: 0.4;
+            background-color: #facc15; 
+            border: 2px dashed #ef4444; /* 호버 시 빨간 점선 */
+        }
+        
+        /* Modal Style */
+        .modal {
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 50;
+        }
+
+        /* Artwork Reveal Section Style */
+        #artwork-reveal {
+            min-height: 100vh;
+            background-color: #1e293b; 
+            color: #e2e8f0; 
+            transition: opacity 1s ease-in-out;
+            opacity: 0;
+            padding: 4rem 1rem;
+        }
+        #artwork-reveal.scrolled {
+            opacity: 1;
+        }
+
+        @media (min-width: 1024px) {
+            .main-content {
+                display: grid;
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Header -->
+    <header class="header-bg shadow-lg sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-4">
+            <h1 class="text-3xl font-extrabold primary-color tracking-widest">
+                미지 (美地)
+            </h1>
+            <nav class="hidden md:block">
+                <a href="#" class="text-white hover:text-yellow-400 px-3 py-2 rounded-md font-medium">분석 지도</a>
+                <a href="#reveal-point" class="text-white hover:text-yellow-400 px-3 py-2 rounded-md font-medium">작품 의미</a>
+                <a href="#" class="text-white hover:text-yellow-400 px-3 py-2 rounded-md font-medium">개발 상담</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto p-4 md:p-8">
+        <h2 class="text-3xl font-bold text-gray-800 mb-6 border-l-4 border-yellow-400 pl-4">
+            프리미엄 외모 자산 개발 현황 보고서
+        </h2>
+        
+        <div class="main-content gap-8">
+            
+            <!-- Left: Development Map -->
+            <section class="data-card-bg rounded-xl shadow-2xl p-6 lg:mb-0">
+                <h3 class="text-xl font-bold text-slate-800 mb-4">개발 대상지 현황 지도</h3>
+                
+                <div class="face-container" id="face-map-bg">
+                    <!-- Interactive areas -->
+                    <div class="absolute inset-0">
+                        <div class="face-area" data-part="눈" style="top: 23%; left: 18%; width: 25%; height: 8%; transform: rotate(-5deg);" title="눈 지역"></div>
+                        <div class="face-area" data-part="눈" style="top: 23%; right: 18%; width: 25%; height: 8%; transform: rotate(5deg);" title="눈 지역"></div>
+                        <div class="face-area" data-part="코" style="top: 32%; left: 35%; width: 30%; height: 22%;" title="코 지역"></div>
+                        <div class="face-area" data-part="입/입술" style="top: 60%; left: 32%; width: 36%; height: 10%;" title="입술 지역"></div>
+                        <div class="face-area" data-part="눈썹" style="top: 18%; left: 15%; width: 30%; height: 5%; transform: rotate(-5deg);" title="눈썹 지역"></div>
+                        <div class="face-area" data-part="눈썹" style="top: 18%; right: 15%; width: 30%; height: 5%; transform: rotate(5deg);" title="눈썹 지역"></div>
+                        <div class="face-area" data-part="얼굴형" style="top: 50%; left: 5%; width: 15%; height: 35%;" title="윤곽/턱선"></div>
+                        <div class="face-area" data-part="얼굴형" style="top: 50%; right: 5%; width: 15%; height: 35%;" title="윤곽/턱선"></div>
+                        <div class="face-area" data-part="귀" style="top: 35%; left: 0%; width: 10%; height: 15%;" title="귀"></div>
+                        <div class="face-area" data-part="헤어라인" style="top: 0%; left: 15%; width: 70%; height: 15%;" title="헤어라인"></div>
+                    </div>
+                </div>
+                <p class="mt-4 text-center text-sm text-gray-500">
+                    지도 위의 각 지역을 **클릭**하여 숨겨진 **개발 위험 요소**를 확인하세요.
+                </p>
+            </section>
+
+            <!-- Right: Reports & Ads -->
+            <section class="space-y-6">
+
+                <!-- Comprehensive Report Card -->
+                <div class="data-card-bg p-6 rounded-xl shadow-lg border-t-8 border-yellow-400">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4">종합 개발 가치 분석</h3>
+                    <div class="space-y-3">
+                        <div class="bg-gray-50 p-3 rounded-md border-l-4 border-blue-600">
+                            <p class="font-semibold text-sm text-gray-700">지역 가치 지수: <span class="float-right font-bold text-blue-600">★★★★☆</span></p>
+                            <p class="text-xs text-gray-500 mt-1">투자 대비 심리적 만족도 불확실, 리스크 존재</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-md border-l-4 border-yellow-600">
+                            <p class="font-semibold text-sm text-gray-700">긴급 개발 필요성: <span class="float-right font-bold text-red-600">높음 (High)</span></p>
+                            <p class="text-xs text-gray-500 mt-1">주변 시선 및 사회적 압력 지수 상승 중</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aggressive Ad Banners with People Images -->
+                <div class="space-y-4">
+                    <h3 class="text-xl font-bold text-slate-800 border-b pb-2">개발 독려 프리미엄 광고</h3>
+
+                    <!-- Ad Banner 1: 수능 할인 -->
+                    <div class="ad-banner-bg rounded-xl shadow-md border-2 border-red-500 hover:shadow-xl transform transition duration-300 overflow-hidden group cursor-pointer">
+                        <div class="flex h-32">
+                            <div class="w-1/3 overflow-hidden relative">
+                                <!-- Placeholder for Person Image -->
+                                <img src="https://images.unsplash.com/photo-1590400946257-2b083b42a420?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Student" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-red-600 opacity-20"></div>
+                            </div>
+                            <div class="w-2/3 p-4 flex flex-col justify-center">
+                                <h4 class="text-xl font-extrabold text-red-600 mb-1">🎉 수능 끝, 예쁨 시작!</h4>
+                                <p class="text-base font-bold text-slate-800 leading-tight">안면 윤곽 / 눈 성형 <br><span class="bg-yellow-300 px-1">최대 50% 할인</span></p>
+                                <p class="text-xs text-gray-500 mt-2">대학 가기 전, '새로 고침' 하세요.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ad Banner 2: 부담스러운 시술 광고 -->
+                    <div class="ad-banner-bg rounded-xl shadow-md border-2 border-blue-600 overflow-hidden cursor-pointer group">
+                        <div class="relative h-40">
+                             <!-- Placeholder for Person Image -->
+                            <img src="https://images.unsplash.com/photo-1588510884976-7e4496b8dc31?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Model Face" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
+                            <div class="absolute bottom-0 left-0 p-4 w-full text-white">
+                                <p class="text-xs font-bold bg-blue-600 inline-block px-2 py-1 rounded mb-1">AI 정밀 진단</p>
+                                <p class="text-lg font-bold leading-tight">당신의 얼굴, <br><span class="text-yellow-400">재개발 가치</span>는 얼마입니까?</p>
+                            </div>
+                        </div>
+                        <div class="p-3 bg-white">
+                            <p class="text-xs text-gray-500 text-right font-semibold">#외모정병 #경쟁력 #지금예약시_필러무료</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Scroll Anchor for Reveal -->
+        <div id="reveal-point" class="pt-32"></div>
+
+    </main>
+    
+    <!-- Artwork Revelation Section (Scroll Down Content) -->
+    <section id="artwork-reveal">
+        <div class="max-w-4xl mx-auto p-6 text-center">
+            <h3 class="text-4xl font-extrabold text-red-400 mb-6 tracking-wider">
+                미지(美地): 개발 계획의 숨겨진 비용
+            </h3>
+            <p class="text-lg font-light leading-relaxed mb-8 text-gray-300">
+                우리는 우리의 얼굴을 '땅'처럼 바라봅니다. 가치를 높이기 위해 끊임없이 재정비하고, 시술이라는 이름의 개발을 감행합니다. 사회적 미의 기준에 맞추려는 이 강박적인 개발은 결국 **개인의 정신적 토지**를 침범하고, **예상치 못한 부작용**이라는 지반 침하를 겪게 합니다.
+            </p>
+            <p class="text-base font-medium text-gray-400">
+                지도에서 확인한 부작용 정보들은 우리가 외모를 '상품'으로 개발하며 치러야 하는 대가입니다. <br>
+                끊임없이 쏟아지는 광고와 개발 압력 속에서, 이 작품은 맹목적인 투자를 멈추고 본질적 가치를 성찰하도록 유도합니다.
+            </p>
+            <div class="mt-12">
+                <a href="#" class="inline-block px-8 py-3 border border-red-500 text-red-400 font-bold rounded-full hover:bg-red-600 hover:text-white transition duration-300">
+                    처음으로 돌아가기
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal for Side Effect Details -->
+    <div id="side-effect-modal" class="modal fixed inset-0 hidden items-center justify-center p-4">
+        <div class="data-card-bg w-full max-w-lg rounded-xl shadow-2xl p-6 border-t-8 border-red-500 transform transition-all scale-95 opacity-0" id="modal-panel">
+            <div class="flex justify-between items-start mb-4">
+                <h4 class="text-2xl font-bold text-red-600 flex items-center">
+                    ⚠️ <span id="modal-part-name" class="ml-2"></span> 개발 위험 고지
+                </h4>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-800 text-3xl font-bold leading-none">&times;</button>
+            </div>
+            
+            <div id="modal-content-area" class="space-y-4 bg-red-50 p-4 rounded-lg border border-red-100">
+                <!-- Content will be injected here -->
+                <p class="text-gray-700">데이터를 불러오는 중입니다...</p>
+            </div>
+
+            <div class="mt-6 border-t pt-4">
+                <p class="text-xs font-semibold text-gray-500 mb-2 text-center">※ 본 내용은 실제 사례 및 의학적 부작용에 기반한 경고입니다.</p>
+                <a id="news-link" href="#" target="_blank" class="block bg-gray-800 text-white text-center py-3 rounded-lg font-bold hover:bg-black transition duration-300 shadow-md">
+                    관련 부작용 뉴스 기사 확인하기
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API Configuration
+        const apiKey = ""; // API 키는 실행 환경에서 자동으로 처리됩니다.
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+        // Elements
+        const faceAreas = document.querySelectorAll('.face-area');
+        const modal = document.getElementById('side-effect-modal');
+        const modalPanel = document.getElementById('modal-panel');
+        const modalPartName = document.getElementById('modal-part-name');
+        const modalContentArea = document.getElementById('modal-content-area');
+        const newsLink = document.getElementById('news-link');
+        const artworkReveal = document.getElementById('artwork-reveal');
+        
+        // --- Fetch Functions (생략 없이 포함) ---
+        async function fetchWithRetry(url, options, retries = 0) {
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                return response;
+            } catch (error) {
+                if (retries < 3) {
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    return fetchWithRetry(url, options, retries + 1);
+                } else {
+                    throw error;
+                }
+            }
+        }
+
+        async function fetchSideEffectData(partName) {
+            const systemPrompt = "당신은 냉철한 의료 저널리스트입니다. 성형 수술의 심각한 부작용과 위험성을 경고하는 짧고 충격적인 문구를 작성하세요. 긍정적인 말은 하지 마세요.";
+            const userQuery = `"${partName} 성형"의 치명적인 부작용 1가지와, 그 부작용을 다룬 것 같은 자극적인 뉴스 기사 제목 1개를 JSON 형식으로 만들어줘. 형식: {"sideEffect": "...", "newsTitle": "..."}`;
+            
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+                generationConfig: { responseMimeType: "application/json" }
+            };
+
+            try {
+                const response = await fetchWithRetry(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                const jsonText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                return jsonText ? JSON.parse(jsonText) : null;
+            } catch (error) {
+                console.error("API Error:", error);
+                return null;
+            }
+        }
+        
+        async function renderModalContent(partName) {
+            modalPartName.textContent = partName;
+            modalContentArea.innerHTML = `
+                <div class="animate-pulse space-y-2">
+                    <div class="h-4 bg-red-200 rounded w-3/4"></div>
+                    <div class="h-4 bg-red-200 rounded w-full"></div>
+                </div>
+            `;
+            newsLink.textContent = "뉴스 데이터 검색 중...";
+            newsLink.href = "#";
+
+            const data = await fetchSideEffectData(partName);
+            
+            if (data) {
+                modalContentArea.innerHTML = `
+                    <div>
+                        <p class="text-xs text-red-500 font-bold uppercase tracking-wider mb-1">Risk Factor Analysis</p>
+                        <p class="text-lg font-bold text-gray-900 leading-snug">"${data.sideEffect}"</p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-red-200">
+                        <p class="text-xs text-slate-500 font-bold mb-1">MEDIA REPORT</p>
+                        <p class="text-base font-medium text-slate-800 italic bg-white p-2 rounded border border-gray-200">
+                            📰 [단독] ${data.newsTitle}
+                        </p>
+                    </div>
+                `;
+                newsLink.href = "https://www.google.com/search?q=" + encodeURIComponent(data.newsTitle);
+                newsLink.textContent = "해당 뉴스 기사 검색 결과 보기 >";
+            } else {
+                modalContentArea.innerHTML = `<p class="text-red-600">데이터를 불러오지 못했습니다.</p>`;
+            }
+        }
+        
+        // --- Event Listeners ---
+        faceAreas.forEach(area => {
+            area.addEventListener('click', (e) => {
+                const partName = e.target.dataset.part;
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                // 애니메이션 효과
+                setTimeout(() => {
+                    modalPanel.classList.remove('scale-95', 'opacity-0');
+                    modalPanel.classList.add('scale-100', 'opacity-100');
+                }, 10);
+                renderModalContent(partName);
+            });
+        });
+
+        function closeModal() {
+            modalPanel.classList.remove('scale-100', 'opacity-100');
+            modalPanel.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY + window.innerHeight;
+            const revealPoint = document.getElementById('reveal-point').offsetTop + 100;
+            
+            if (scrollPosition > revealPoint) {
+                artworkReveal.classList.add('scrolled');
+            } else {
+                artworkReveal.classList.remove('scrolled');
+            }
+        });
+
+        // 사용자 이미지 적용 가이드 (콘솔)
+        console.log("Tip: 실제 이미지를 사용하려면 'face-container' 스타일의 background-image URL을 변경하세요.");
+    </script>
+
+</body>
+</html>
