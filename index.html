@@ -72,6 +72,15 @@
         }
         #artwork-reveal.scrolled { opacity: 1; }
 
+        /* 광고 전환 애니메이션 */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @media (min-width: 1024px) {
             .main-content { display: grid; grid-template-columns: 2fr 1fr; }
         }
@@ -108,36 +117,23 @@
                 <div class="face-container" id="face-map-bg">
                     <!-- Interactive areas -->
                     <div class="absolute inset-0">
-                        <!-- 
-                           [가이드 이미지 기반 재수정 v3]
-                           박스 위치를 더 정확하게 조정했습니다.
-                        -->
-                        
-                        <!-- 1. 헤어라인 (상단 넓은 영역) -->
+                        <!-- 1. 헤어라인 -->
                         <div class="face-area" data-part="헤어라인" style="top: 18%; left: 22%; width: 26%; height: 13%;" title="헤어라인"></div>
-                        
                         <!-- 2. 눈 (좌측) -->
                         <div class="face-area" data-part="눈" style="top: 41%; left: 22%; width: 9%; height: 8%;" title="눈 (좌)"></div>
-                        
                         <!-- 3. 눈 (우측) -->
                         <div class="face-area" data-part="눈" style="top: 41%; left: 35%; width: 10%; height: 8%;" title="눈 (우)"></div>
-
-                        <!-- 4. 눈썹 (우측 눈 위쪽) -->
+                        <!-- 4. 눈썹 -->
                         <div class="face-area" data-part="눈썹" style="top: 36%; left: 35%; width: 10%; height: 5%;" title="눈썹"></div>
-
-                        <!-- 5. 코 (중앙) -->
+                        <!-- 5. 코 -->
                         <div class="face-area" data-part="코" style="top: 50%; left: 27%; width: 11%; height: 10%;" title="코"></div>
-                        
-                        <!-- 6. 턱/입 (하단 중앙) -->
+                        <!-- 6. 턱/입 -->
                         <div class="face-area" data-part="입/입술" style="top: 63%; left: 27%; width: 13%; height: 13%;" title="입술/턱"></div>
-                        
-                        <!-- 7. 귀 (우측 측면) -->
+                        <!-- 7. 귀 -->
                         <div class="face-area" data-part="귀" style="top: 40%; left: 51%; width: 10%; height: 12%;" title="귀"></div>
-                        
-                        <!-- 8. 얼굴형 (우측 뺨/턱선) -->
+                        <!-- 8. 얼굴형 -->
                         <div class="face-area" data-part="얼굴형" style="top: 54%; left: 42%; width: 14%; height: 14%;" title="얼굴형"></div>
-                        
-                        <!-- 9. 어깨 (좌측 하단 큰 박스) -->
+                        <!-- 9. 어깨 -->
                         <div class="face-area" data-part="체형/어깨" style="top: 74%; left: 27%; width: 18%; height: 22%;" title="어깨/쇄골"></div>
                     </div>
                 </div>
@@ -164,39 +160,18 @@
                     </div>
                 </div>
 
-                <!-- Aggressive Ad Banners with People Images -->
+                <!-- [수정] Dynamic Ad Banners Container -->
                 <div class="space-y-4">
-                    <h3 class="text-xl font-bold text-slate-800 border-b pb-2">개발 독려 프리미엄 광고</h3>
+                    <h3 class="text-xl font-bold text-slate-800 border-b pb-2 flex justify-between items-center">
+                        개발 독려 프리미엄 광고
+                        <span class="text-xs text-gray-400 font-normal">Sponsored</span>
+                    </h3>
 
-                    <!-- Ad Banner 1: 수능 할인 -->
-                    <div class="ad-banner-bg rounded-xl shadow-md border-2 border-red-500 hover:shadow-xl transform transition duration-300 overflow-hidden group cursor-pointer">
-                        <div class="flex h-32">
-                            <div class="w-1/3 overflow-hidden relative">
-                                <img src="https://images.unsplash.com/photo-1590400946257-2b083b42a420?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Student" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                <div class="absolute inset-0 bg-red-600 opacity-20"></div>
-                            </div>
-                            <div class="w-2/3 p-4 flex flex-col justify-center">
-                                <h4 class="text-xl font-extrabold text-red-600 mb-1">🎉 수능 끝, 예쁨 시작!</h4>
-                                <p class="text-base font-bold text-slate-800 leading-tight">안면 윤곽 / 눈 성형 <br><span class="bg-yellow-300 px-1">최대 50% 할인</span></p>
-                                <p class="text-xs text-gray-500 mt-2">대학 가기 전, '새로 고침' 하세요.</p>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- 광고 슬롯 1 (JS로 내용이 바뀜) -->
+                    <div id="ad-slot-1"></div>
 
-                    <!-- Ad Banner 2: 부담스러운 시술 광고 -->
-                    <div class="ad-banner-bg rounded-xl shadow-md border-2 border-blue-600 overflow-hidden cursor-pointer group">
-                        <div class="relative h-40">
-                            <img src="https://images.unsplash.com/photo-1588510884976-7e4496b8dc31?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Model Face" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition duration-300">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
-                            <div class="absolute bottom-0 left-0 p-4 w-full text-white">
-                                <p class="text-xs font-bold bg-blue-600 inline-block px-2 py-1 rounded mb-1">AI 정밀 진단</p>
-                                <p class="text-lg font-bold leading-tight">당신의 얼굴, <br><span class="text-yellow-400">재개발 가치</span>는 얼마입니까?</p>
-                            </div>
-                        </div>
-                        <div class="p-3 bg-white">
-                            <p class="text-xs text-gray-500 text-right font-semibold">#외모정병 #경쟁력 #지금예약시_필러무료</p>
-                        </div>
-                    </div>
+                    <!-- 광고 슬롯 2 (JS로 내용이 바뀜) -->
+                    <div id="ad-slot-2"></div>
                 </div>
             </section>
         </div>
@@ -251,9 +226,101 @@
     </div>
 
     <script>
-        // API Configuration
-        const apiKey = ""; 
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+        // [광고 데이터] 더욱 자극적이고 다양한 광고 문구 모음
+        const adContents = [
+            {
+                title: "🎉 수능 끝, 예쁨 시작!",
+                desc: "안면 윤곽 / 눈 성형 <br><span class='bg-yellow-300 px-1'>최대 50% 할인</span>",
+                sub: "대학 가기 전, '새로 고침' 하세요.",
+                img: "https://images.unsplash.com/photo-1590400946257-2b083b42a420?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+                borderColor: "border-red-500",
+                textColor: "text-red-600"
+            },
+            {
+                title: "💎 뼈를 깎는 고통? NO!",
+                desc: "10분 완성 <span class='text-blue-600'>퀵 광대 축소술</span>",
+                sub: "점심시간에 몰래 예뻐지자! (부기/멍 최소화)",
+                img: "https://images.unsplash.com/photo-1588510884976-7e4496b8dc31?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                borderColor: "border-blue-600",
+                textColor: "text-blue-600"
+            },
+            {
+                title: "🚨 긴급! 선착순 10명",
+                desc: "당신의 턱, <span class='text-red-600 font-bold'>사각지대</span>입니까?",
+                sub: "V라인 패키지 오늘만 특가. 놓치면 평생 후회.",
+                img: "https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                borderColor: "border-red-600",
+                textColor: "text-red-700"
+            },
+            {
+                title: "🤖 AI 관상 성형 진단",
+                desc: "내 얼굴 <span class='bg-green-200 px-1'>재물운/연애운</span> 바꾸기",
+                sub: "데이터가 증명하는 인생 역전 솔루션.",
+                img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                borderColor: "border-green-500",
+                textColor: "text-green-700"
+            },
+            {
+                title: "💉 필러 무제한 이벤트",
+                desc: "꺼진 볼, 팔자 주름 <span class='text-purple-600'>즉시 복구</span>",
+                sub: "#동안성형 #효도성형 #자연스러움",
+                img: "https://images.unsplash.com/photo-1512353087810-25dfcd100962?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                borderColor: "border-purple-500",
+                textColor: "text-purple-600"
+            },
+            {
+                title: "😎 남자도 가꾸는 시대",
+                desc: "T존 입체감 살리는 <span class='text-slate-800 font-bold'>남성 코 성형</span>",
+                sub: "면접 프리패스상, 지금 상담하세요.",
+                img: "https://images.unsplash.com/photo-1629425733761-caacece432d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                borderColor: "border-slate-600",
+                textColor: "text-slate-800"
+            }
+        ];
+
+        // [중요] 부작용 데이터베이스 (하드코딩)
+        const sideEffectDatabase = {
+            "눈": {
+                sideEffect: "심각한 안구 건조증, 복시(사물이 두 개로 보임), 토안증(눈이 감기지 않음)으로 인한 각막 손상 위험.",
+                newsTitle: "쌍꺼풀 수술 후 눈 안 감겨... '평생 인공눈물 달고 살아야'",
+                query: "눈 성형 부작용 토안증"
+            },
+            "코": {
+                sideEffect: "보형물 구축 현상(코가 들림), 피부 괴사, 심각한 염증 반응으로 인한 호흡 곤란.",
+                newsTitle: "코 성형 보형물 뚫고 나와... 재수술만 5번째 '성형 지옥'",
+                query: "코 성형 구축 부작용 괴사"
+            },
+            "입/입술": {
+                sideEffect: "입술 감각 마비, 필러 괴사로 인한 조직 손상, 비대칭 및 웃음 신경 손상.",
+                newsTitle: "입꼬리 수술 후 '웃지 못하는 얼굴' 됐다... 신경 손상 호소",
+                query: "입술 필러 부작용 괴사"
+            },
+            "헤어라인": {
+                sideEffect: "두피 감각 이상, 이식 부위 모낭염 및 흉터, 생착 실패로 인한 영구 탈모.",
+                newsTitle: "'동안 되려다 흉터만 남았다'... 모발 이식 부작용 주의보",
+                query: "모발이식 부작용 흉터"
+            },
+            "눈썹": {
+                sideEffect: "비위생적 시술로 인한 C형 간염 감염, 색소 침착 및 영구적인 흉터.",
+                newsTitle: "불법 반영구 시술 받다 피부 괴사... '평생 지워지지 않는 상처'",
+                query: "반영구 눈썹 부작용 감염"
+            },
+            "얼굴형": {
+                sideEffect: "안면 신경 마비, 턱 관절 장애, 과다 출혈 및 감각 소실 (일명 '살처짐').",
+                newsTitle: "안면윤곽 수술 중 과다출혈로 뇌사... 끊이지 않는 '유령 수술' 의혹",
+                query: "안면윤곽 부작용 신경마비"
+            },
+            "귀": {
+                sideEffect: "연골막염으로 인한 귀 변형(일명 '만두귀'), 청력 저하 및 심한 통증.",
+                newsTitle: "귀 성형 후 연골 녹아내려... '마스크도 못 건다' 고통",
+                query: "귀 성형 부작용 연골막염"
+            },
+            "체형/어깨": {
+                sideEffect: "승모근 보톡스 부작용으로 인한 팔 들어올림 장애, 근육 위축 및 만성 통증.",
+                newsTitle: "웨딩드레스 입으려다 팔 못 쓴다... 승모근 보톡스의 배신",
+                query: "승모근 보톡스 부작용 마비"
+            }
+        };
 
         // Elements
         const faceAreas = document.querySelectorAll('.face-area');
@@ -264,77 +331,77 @@
         const newsLink = document.getElementById('news-link');
         const artworkReveal = document.getElementById('artwork-reveal');
         
-        async function fetchWithRetry(url, options, retries = 0) {
-            try {
-                const response = await fetch(url, options);
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                return response;
-            } catch (error) {
-                if (retries < 3) {
-                    await new Promise(resolve => setTimeout(resolve, 1000));
-                    return fetchWithRetry(url, options, retries + 1);
-                } else {
-                    throw error;
-                }
-            }
+        // --- 광고 롤링 기능 ---
+        function getRandomAd() {
+            return adContents[Math.floor(Math.random() * adContents.length)];
         }
 
-        async function fetchSideEffectData(partName) {
-            const systemPrompt = "당신은 냉철한 의료 저널리스트입니다. 성형 수술의 심각한 부작용과 위험성을 경고하는 짧고 충격적인 문구를 작성하세요. 긍정적인 말은 하지 마세요.";
-            const userQuery = `"${partName} 성형"의 치명적인 부작용 1가지와, 그 부작용을 다룬 것 같은 자극적인 뉴스 기사 제목 1개를 JSON 형식으로 만들어줘. 형식: {"sideEffect": "...", "newsTitle": "..."}`;
-            
-            const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                systemInstruction: { parts: [{ text: systemPrompt }] },
-                generationConfig: { responseMimeType: "application/json" }
-            };
-
-            try {
-                const response = await fetchWithRetry(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const result = await response.json();
-                const jsonText = result.candidates?.[0]?.content?.parts?.[0]?.text;
-                return jsonText ? JSON.parse(jsonText) : null;
-            } catch (error) {
-                console.error("API Error:", error);
-                return null;
-            }
+        function createAdHTML(ad) {
+            return `
+                <div class="fade-in ad-banner-bg rounded-xl shadow-md border-2 ${ad.borderColor} hover:shadow-xl transform transition duration-300 overflow-hidden group cursor-pointer mb-4">
+                    <div class="flex h-32">
+                        <div class="w-1/3 overflow-hidden relative">
+                            <img src="${ad.img}" alt="Ad" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-black opacity-10"></div>
+                        </div>
+                        <div class="w-2/3 p-4 flex flex-col justify-center">
+                            <h4 class="text-lg font-extrabold ${ad.textColor} mb-1">${ad.title}</h4>
+                            <p class="text-sm font-bold text-slate-800 leading-tight">${ad.desc}</p>
+                            <p class="text-xs text-gray-500 mt-2">${ad.sub}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
-        
-        async function renderModalContent(partName) {
+
+        function rotateAds() {
+            // 서로 다른 광고 2개 선택
+            let ad1 = getRandomAd();
+            let ad2 = getRandomAd();
+            while (ad1 === ad2) { ad2 = getRandomAd(); } // 중복 방지
+
+            document.getElementById('ad-slot-1').innerHTML = createAdHTML(ad1);
+            document.getElementById('ad-slot-2').innerHTML = createAdHTML(ad2);
+        }
+
+        // 초기 광고 로드 및 3.5초마다 갱신
+        rotateAds();
+        setInterval(rotateAds, 3500);
+
+
+        // --- 모달 기능 (기존 유지) ---
+        function renderModalContent(partName) {
             modalPartName.textContent = partName;
+            
             modalContentArea.innerHTML = `
                 <div class="animate-pulse space-y-2">
                     <div class="h-4 bg-red-200 rounded w-3/4"></div>
                     <div class="h-4 bg-red-200 rounded w-full"></div>
                 </div>
             `;
-            newsLink.textContent = "뉴스 데이터 검색 중...";
-            newsLink.href = "#";
-
-            const data = await fetchSideEffectData(partName);
             
-            if (data) {
-                modalContentArea.innerHTML = `
-                    <div>
-                        <p class="text-xs text-red-500 font-bold uppercase tracking-wider mb-1">Risk Factor Analysis</p>
-                        <p class="text-lg font-bold text-gray-900 leading-snug">"${data.sideEffect}"</p>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-red-200">
-                        <p class="text-xs text-slate-500 font-bold mb-1">MEDIA REPORT</p>
-                        <p class="text-base font-medium text-slate-800 italic bg-white p-2 rounded border border-gray-200">
-                            📰 [단독] ${data.newsTitle}
-                        </p>
-                    </div>
-                `;
-                newsLink.href = "https://www.google.com/search?q=" + encodeURIComponent(data.newsTitle);
-                newsLink.textContent = "해당 뉴스 기사 검색 결과 보기 >";
-            } else {
-                modalContentArea.innerHTML = `<p class="text-red-600">데이터를 불러오지 못했습니다.</p>`;
-            }
+            setTimeout(() => {
+                const data = sideEffectDatabase[partName];
+                
+                if (data) {
+                    modalContentArea.innerHTML = `
+                        <div>
+                            <p class="text-xs text-red-500 font-bold uppercase tracking-wider mb-1">Risk Factor Analysis</p>
+                            <p class="text-lg font-bold text-gray-900 leading-snug">"${data.sideEffect}"</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-red-200">
+                            <p class="text-xs text-slate-500 font-bold mb-1">MEDIA REPORT</p>
+                            <p class="text-base font-medium text-slate-800 italic bg-white p-2 rounded border border-gray-200">
+                                📰 [단독] ${data.newsTitle}
+                            </p>
+                        </div>
+                    `;
+                    newsLink.href = "https://www.google.com/search?q=" + encodeURIComponent(data.query);
+                    newsLink.textContent = "관련 실제 뉴스 기사 검색 >";
+                } else {
+                    modalContentArea.innerHTML = `<p class="text-red-600">데이터를 찾을 수 없습니다.</p>`;
+                }
+            }, 300);
         }
         
         faceAreas.forEach(area => {
